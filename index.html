@@ -68,4 +68,324 @@
             justify-content: center;
             z-index: 10;
             width: 100%;
-            max-width: 650
+            max-width: 650px;
+            padding: 20px;
+        }
+
+        .indicador {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+            text-align: center;
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s ease;
+            animation: flotarSuave 3s infinite ease-in-out;
+        }
+        body.encendido .indicador {
+            opacity: 0;
+            transform: translateY(-30px);
+            pointer-events: none;
+        }
+
+        /* --- ARQUITECTURA DEL FÓSFORO --- */
+        .fosforo-objeto {
+            position: relative;
+            width: 14px;
+            height: 190px;
+            cursor: pointer;
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            /* Asegurar que los toques en móvil sean fáciles */
+            padding: 10px;
+            background-clip: content-box;
+        }
+        .fosforo-objeto:hover, .fosforo-objeto:active {
+            transform: scale(1.08) translateY(-5px);
+        }
+        body.encendido .fosforo-objeto {
+            transform: scale(0.85) translateY(20px);
+            cursor: default;
+        }
+
+        .palito-madera {
+            width: 100%;
+            height: 100%;
+            background: #edd09e;
+            border-radius: 2px;
+            box-shadow: inset -3px 0 5px rgba(0,0,0,0.15), 2px 5px 15px rgba(0,0,0,0.5);
+            transition: background 3s ease;
+        }
+        body.encendido .palito-madera {
+            background: linear-gradient(to top, #edd09e 20%, #4a2f20 60%, #1c110b 90%);
+        }
+
+        .cabeza-quimica {
+            position: absolute;
+            top: -12px;
+            left: 6px; /* Ajustado por el padding añadido */
+            width: 22px;
+            height: 26px;
+            background: #2c2523;
+            border-radius: 50% 50% 45% 45%;
+            transition: background 1s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+        }
+        body.encendido .cabeza-quimica {
+            background: #110d0c;
+            box-shadow: inset 0 0 5px rgba(255,255,255,0.2);
+        }
+
+        /* --- LA FLAMA HIPNÓTICA --- */
+        .flama-magica {
+            position: absolute;
+            top: -85px;
+            left: -13px; /* Ajustado por el padding añadido */
+            width: 60px;
+            height: 100px;
+            background: radial-gradient(ellipse at bottom, 
+                #ffffff 0%, 
+                #fff4cc 15%, 
+                #ffb300 40%, 
+                #ff3c00 70%, 
+                rgba(255, 0, 76, 0) 100%);
+            border-radius: 50% 50% 35% 35%;
+            transform: scale(0);
+            transform-origin: bottom center;
+            filter: blur(1px);
+            pointer-events: none;
+        }
+        body.encendido .flama-magica {
+            animation: encendidoInicial 0.7s forwards cubic-bezier(0.34, 1.56, 0.64, 1), 
+                       fuegoVivo 0.15s infinite alternate ease-in-out;
+        }
+
+        .contenedor-carta {
+            position: absolute;
+            background: var(--color-cristal);
+            border: 1px solid var(--borde-cristal);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 45px 40px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6), 
+                        inset 0 1px 0 rgba(255,255,255,0.1);
+            opacity: 0;
+            transform: translateY(50px) scale(0.95);
+            transition: opacity 2.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        transform 2.5s cubic-bezier(0.25, 1, 0.5, 1);
+            pointer-events: none;
+            z-index: 15;
+            width: 90%;
+            max-width: 580px;
+            /* Scroll interno en caso de que la pantalla sea excesivamente pequeña */
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        body.encendido .contenedor-carta {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            transition-delay: 1s;
+            pointer-events: auto;
+        }
+
+        /* Tipografías Románticas Modernas */
+        .titulo-carta {
+            font-family: var(--fuente-titulo);
+            font-size: 2.8rem;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .texto-prosa {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.75);
+            font-weight: 300;
+        }
+
+        .palabra-interactiva {
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+        }
+        .palabra-interactiva:hover, .palabra-interactiva:active {
+            color: #ff77a8;
+            transform: translateY(-4px) scale(1.08);
+            text-shadow: 0 0 15px rgba(255, 71, 126, 0.6);
+        }
+
+        /* --- PARTÍCULAS DE CLICS --- */
+        .particula-corazon {
+            position: absolute;
+            pointer-events: none;
+            z-index: 20;
+            animation: volarCorazon 1.5s forwards cubic-bezier(0.1, 0.8, 0.3, 1);
+        }
+
+        /* --- MEDIA QUERIES PARA CELULARES --- */
+        @media (max-width: 768px) {
+            .contenedor-carta {
+                padding: 35px 25px;
+                width: 95%;
+            }
+            .titulo-carta {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+            .texto-prosa {
+                font-size: 1rem;
+                line-height: 1.7;
+            }
+            .indicador {
+                font-size: 0.8rem;
+                margin-bottom: 40px;
+                padding: 0 15px;
+            }
+            body.encendido .fosforo-objeto {
+                transform: scale(0.65) translateY(30px);
+            }
+        }
+
+        @media (max-width: 400px) {
+            .contenedor-carta {
+                padding: 25px 15px;
+            }
+            .titulo-carta {
+                font-size: 1.6rem;
+            }
+            .texto-prosa {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+        }
+
+        /* --- ANIMACIONES --- */
+        @keyframes flotarSuave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); opacity: 0.6; }
+        }
+        @keyframes encendidoInicial {
+            0% { transform: scale(0); filter: blur(4px); }
+            45% { transform: scale(1.3) translateY(-15px); }
+            100% { transform: scale(1); filter: blur(1px); }
+        }
+        @keyframes fuegoVivo {
+            0% { transform: rotate(-1deg) scaleX(0.96); border-radius: 50% 50% 38% 38%; }
+            100% { transform: rotate(1deg) scaleX(1.04); border-radius: 46% 46% 32% 32%; }
+        }
+        @keyframes volarCorazon {
+            0% { transform: translate(-50%, -50%) scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(1.5) rotate(var(--r)); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="luz-ambiental" id="luz"></div>
+
+    <main class="escena-central">
+        <p class="indicador">Toca el fósforo para encender la chispa</p>
+
+        <div class="fosforo-objeto" id="fosforo">
+            <div class="flama-magica"></div>
+            <div class="cabeza-quimica"></div>
+            <div class="palito-madera"></div>
+        </div>
+
+        <article class="contenedor-carta">
+            <h1 class="titulo-carta">Encendiste mi universo</h1>
+            <p class="texto-prosa" id="bloqueTexto">
+               Mi amor a veces el mundo entero parece estar a oscuras, hasta que llega esa persona capaz de encenderlo todo con una sola mirada. Así eres tú: una hermosa coincidencia, una luz cálida en medio de la rutina y la melodía más dulce que ha escuchado mi corazón. Gracias por existir y transformar mis días grises en destellos de magia pura te amo y nunca dejare de hacerlo .
+            </p>
+        </article>
+    </main>
+
+    <script>
+        const cuerpo = document.body;
+        const nodoFosforo = document.getElementById('fosforo');
+        const nodoLuz = document.getElementById('luz');
+        const bloqueTexto = document.getElementById('bloqueTexto');
+
+        // 1. FORMATEO DE TEXTO INTERACTIVO AUTOMÁTICO
+        const palabras = bloqueTexto.innerText.split(' ');
+        bloqueTexto.innerHTML = palabras.map(palabra => {
+            return `<span class="palabra-interactiva">${palabra}</span>`;
+        }).join(' ');
+
+        // 2. DETONANTE DE ENCENDIDO (Soporta clic y toque en móvil)
+        nodoFosforo.addEventListener('click', encenderMagia);
+
+        function encenderMagia(e) {
+            if (!cuerpo.classList.contains('encendido')) {
+                cuerpo.classList.add('encendido');
+                
+                // Coordenadas basadas en si es toque (celular) o clic (pc)
+                let x = e.clientX || (e.touches && e.touches[0].clientX) || window.innerWidth / 2;
+                let y = e.clientY || (e.touches && e.touches[0].clientY) || window.innerHeight / 2;
+                
+                crearExplosionCorazones(x, y, 15);
+            }
+        }
+
+        // 3. INTERACTIVIDAD GLOBAL: CLICS GENERADORES DE CORAZONES
+        window.addEventListener('click', (e) => {
+            if (cuerpo.classList.contains('encendido') && !e.target.closest('.contenedor-carta') && !e.target.closest('.fosforo-objeto')) {
+                crearExplosionCorazones(e.clientX, e.clientY, 8);
+            }
+        });
+
+        // 4. FUNCIÓN GENERADORA DE EFECTOS VISUALES
+        function crearExplosionCorazones(origenX, origenY, cantidad) {
+            const iconos = ['❤️', '✨', '💖', '🌸', '💘'];
+            
+            for (let i = 0; i < cantidad; i++) {
+                const particula = document.createElement('div');
+                particula.className = 'particula-corazon';
+                particula.innerText = iconos[Math.floor(Math.random() * iconos.length)];
+                
+                const destinoX = (Math.random() * 250 - 125) + 'px';
+                const destinoY = (Math.random() * -250 - 50) + 'px';
+                const rotacion = (Math.random() * 90 - 45) + 'deg';
+                const tamaño = (Math.random() * 15 + 15) + 'px';
+
+                particula.style.left = origenX + 'px';
+                particula.style.top = origenY + 'px';
+                particula.style.fontSize = tamaño;
+                
+                particula.style.setProperty('--x', destinoX);
+                particula.style.setProperty('--y', destinoY);
+                particula.style.setProperty('--r', rotacion);
+
+                document.body.appendChild(particula);
+
+                particula.addEventListener('animationend', () => {
+                    particula.remove();
+                });
+            }
+        }
+
+        // 5. EFECTO DE LUZ DINÁMICA (Mouse y Táctil)
+        function actualizarLuz(x, y) {
+            if (cuerpo.classList.contains('encendido')) {
+                const posX = (x / window.innerWidth) * 100;
+                const posY = (y / window.innerHeight) * 100;
+                nodoLuz.style.background = `radial-gradient(circle at ${posX}% ${posY}%, rgba(255, 71, 126, 0.15) 0%, rgba(0,0,0,0) 55%)`;
+            }
+        }
+
+        // Soporte para PC
+        window.addEventListener('mousemove', (e) => actualizarLuz(e.clientX, e.clientY));
+        
+        // Soporte para Celulares (dedo deslizándose)
+        window.addEventListener('touchmove', (e) => {
+            actualizarLuz(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: true });
+        
+    </script>
+</body>
+</html>
