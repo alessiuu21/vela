@@ -2,12 +2,13 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Una Chispa de Magia ✨</title>
     <style>
+        
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap');
 
-        /* --- VARIABLES DE DISEÑO --- */
+        /* --- VARIABLES DE DISEÑO (Para un código ordenado) --- */
         :root {
             --bg-oscuro: #060307;
             --fuente-titulo: 'Playfair Display', serif;
@@ -18,6 +19,7 @@
             --borde-cristal: rgba(255, 255, 255, 0.08);
         }
 
+       
         * {
             box-sizing: border-box;
             margin: 0;
@@ -28,9 +30,7 @@
 
         body {
             background-color: var(--bg-oscuro);
-            /* Uso de dvh para mejor soporte en móviles */
-            height: 100dvh;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -40,6 +40,7 @@
             transition: background 3s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
+      
         body.encendido {
             background: radial-gradient(circle at 50% 40%, #3a001a 0%, #15000b 60%, #050004 100%);
         }
@@ -61,6 +62,7 @@
             opacity: 1;
         }
 
+        
         .escena-central {
             display: flex;
             flex-direction: column;
@@ -72,6 +74,7 @@
             padding: 20px;
         }
 
+      
         .indicador {
             color: rgba(255, 255, 255, 0.4);
             font-size: 0.9rem;
@@ -95,11 +98,8 @@
             height: 190px;
             cursor: pointer;
             transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            /* Asegurar que los toques en móvil sean fáciles */
-            padding: 10px;
-            background-clip: content-box;
         }
-        .fosforo-objeto:hover, .fosforo-objeto:active {
+        .fosforo-objeto:hover {
             transform: scale(1.08) translateY(-5px);
         }
         body.encendido .fosforo-objeto {
@@ -121,8 +121,8 @@
 
         .cabeza-quimica {
             position: absolute;
-            top: -12px;
-            left: 6px; /* Ajustado por el padding añadido */
+            top: -22px;
+            left: -4px;
             width: 22px;
             height: 26px;
             background: #2c2523;
@@ -138,8 +138,8 @@
         /* --- LA FLAMA HIPNÓTICA --- */
         .flama-magica {
             position: absolute;
-            top: -85px;
-            left: -13px; /* Ajustado por el padding añadido */
+            top: -95px;
+            left: -23px;
             width: 60px;
             height: 100px;
             background: radial-gradient(ellipse at bottom, 
@@ -159,6 +159,7 @@
                        fuegoVivo 0.15s infinite alternate ease-in-out;
         }
 
+       
         .contenedor-carta {
             position: absolute;
             background: var(--color-cristal);
@@ -178,9 +179,6 @@
             z-index: 15;
             width: 90%;
             max-width: 580px;
-            /* Scroll interno en caso de que la pantalla sea excesivamente pequeña */
-            max-height: 80vh;
-            overflow-y: auto;
         }
         body.encendido .contenedor-carta {
             opacity: 1;
@@ -207,13 +205,14 @@
             font-weight: 300;
         }
 
+        
         .palabra-interactiva {
             display: inline-block;
             cursor: pointer;
             transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
             position: relative;
         }
-        .palabra-interactiva:hover, .palabra-interactiva:active {
+        .palabra-interactiva:hover {
             color: #ff77a8;
             transform: translateY(-4px) scale(1.08);
             text-shadow: 0 0 15px rgba(255, 71, 126, 0.6);
@@ -223,48 +222,28 @@
         .particula-corazon {
             position: absolute;
             pointer-events: none;
-            z-index: 20;
+            z-index: 5;
             animation: volarCorazon 1.5s forwards cubic-bezier(0.1, 0.8, 0.3, 1);
         }
 
-        /* --- MEDIA QUERIES PARA CELULARES --- */
-        @media (max-width: 768px) {
-            .contenedor-carta {
-                padding: 35px 25px;
-                width: 95%;
-            }
-            .titulo-carta {
-                font-size: 2rem;
-                margin-bottom: 20px;
-            }
-            .texto-prosa {
-                font-size: 1rem;
-                line-height: 1.7;
-            }
-            .indicador {
-                font-size: 0.8rem;
-                margin-bottom: 40px;
-                padding: 0 15px;
-            }
-            body.encendido .fosforo-objeto {
-                transform: scale(0.65) translateY(30px);
-            }
+     
+        .nota-final {
+            position: absolute;
+            bottom: 30px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.25);
+            text-transform: uppercase;
+            opacity: 0;
+            transition: opacity 2s ease 3s;
+            pointer-events: none;
+            z-index: 10;
+        }
+        body.encendido .nota-final {
+            opacity: 1;
         }
 
-        @media (max-width: 400px) {
-            .contenedor-carta {
-                padding: 25px 15px;
-            }
-            .titulo-carta {
-                font-size: 1.6rem;
-            }
-            .texto-prosa {
-                font-size: 0.95rem;
-                line-height: 1.6;
-            }
-        }
-
-        /* --- ANIMACIONES --- */
+     
         @keyframes flotarSuave {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-8px); opacity: 0.6; }
@@ -286,8 +265,10 @@
 </head>
 <body>
 
+    <!-- Capa de luz reactiva -->
     <div class="luz-ambiental" id="luz"></div>
 
+    <!-- Escena Interactiva Ordenada -->
     <main class="escena-central">
         <p class="indicador">Toca el fósforo para encender la chispa</p>
 
@@ -297,6 +278,7 @@
             <div class="palito-madera"></div>
         </div>
 
+        <!-- Estructura de la Carta de Palabras Bonitas -->
         <article class="contenedor-carta">
             <h1 class="titulo-carta">Encendiste mi universo</h1>
             <p class="texto-prosa" id="bloqueTexto">
@@ -305,6 +287,9 @@
         </article>
     </main>
 
+    
+
+ 
     <script>
         const cuerpo = document.body;
         const nodoFosforo = document.getElementById('fosforo');
@@ -312,32 +297,32 @@
         const bloqueTexto = document.getElementById('bloqueTexto');
 
         // 1. FORMATEO DE TEXTO INTERACTIVO AUTOMÁTICO
+        // Dividimos el párrafo palabra por palabra de forma limpia y ordenada
         const palabras = bloqueTexto.innerText.split(' ');
         bloqueTexto.innerHTML = palabras.map(palabra => {
             return `<span class="palabra-interactiva">${palabra}</span>`;
         }).join(' ');
 
-        // 2. DETONANTE DE ENCENDIDO (Soporta clic y toque en móvil)
-        nodoFosforo.addEventListener('click', encenderMagia);
 
-        function encenderMagia(e) {
+        // 2. DETONANTE DE ENCENDIDO
+        nodoFosforo.addEventListener('click', (e) => {
             if (!cuerpo.classList.contains('encendido')) {
                 cuerpo.classList.add('encendido');
                 
-                // Coordenadas basadas en si es toque (celular) o clic (pc)
-                let x = e.clientX || (e.touches && e.touches[0].clientX) || window.innerWidth / 2;
-                let y = e.clientY || (e.touches && e.touches[0].clientY) || window.innerHeight / 2;
-                
-                crearExplosionCorazones(x, y, 15);
+                // Generamos un destello inicial justo en la cabeza del fósforo
+                crearExplosionCorazones(e.clientX, e.clientY, 15);
             }
-        }
+        });
+
 
         // 3. INTERACTIVIDAD GLOBAL: CLICS GENERADORES DE CORAZONES
         window.addEventListener('click', (e) => {
+            // Solo funciona si ya se encendió el fósforo y no se hizo clic en el texto para no estorbar la lectura
             if (cuerpo.classList.contains('encendido') && !e.target.closest('.contenedor-carta') && !e.target.closest('.fosforo-objeto')) {
                 crearExplosionCorazones(e.clientX, e.clientY, 8);
             }
         });
+
 
         // 4. FUNCIÓN GENERADORA DE EFECTOS VISUALES
         function crearExplosionCorazones(origenX, origenY, cantidad) {
@@ -348,8 +333,9 @@
                 particula.className = 'particula-corazon';
                 particula.innerText = iconos[Math.floor(Math.random() * iconos.length)];
                 
+                // Configuración de coordenadas de destino aleatorias
                 const destinoX = (Math.random() * 250 - 125) + 'px';
-                const destinoY = (Math.random() * -250 - 50) + 'px';
+                const destinoY = (Math.random() * -250 - 50) + 'px'; // Siempre viajan hacia arriba
                 const rotacion = (Math.random() * 90 - 45) + 'deg';
                 const tamaño = (Math.random() * 15 + 15) + 'px';
 
@@ -357,35 +343,31 @@
                 particula.style.top = origenY + 'px';
                 particula.style.fontSize = tamaño;
                 
+                // Pasar las variables al CSS mediante propiedades personalizadas
                 particula.style.setProperty('--x', destinoX);
                 particula.style.setProperty('--y', destinoY);
                 particula.style.setProperty('--r', rotacion);
 
                 document.body.appendChild(particula);
 
+                // Remover del documento una vez termine la animación para mantener el código limpio y ágil
                 particula.addEventListener('animationend', () => {
                     particula.remove();
                 });
             }
         }
 
-        // 5. EFECTO DE LUZ DINÁMICA (Mouse y Táctil)
-        function actualizarLuz(x, y) {
+
+        
+        window.addEventListener('mousemove', (e) => {
             if (cuerpo.classList.contains('encendido')) {
-                const posX = (x / window.innerWidth) * 100;
-                const posY = (y / window.innerHeight) * 100;
+                const posX = (e.clientX / window.innerWidth) * 100;
+                const posY = (e.clientY / window.innerHeight) * 100;
+                
+               
                 nodoLuz.style.background = `radial-gradient(circle at ${posX}% ${posY}%, rgba(255, 71, 126, 0.15) 0%, rgba(0,0,0,0) 55%)`;
             }
-        }
-
-        // Soporte para PC
-        window.addEventListener('mousemove', (e) => actualizarLuz(e.clientX, e.clientY));
-        
-        // Soporte para Celulares (dedo deslizándose)
-        window.addEventListener('touchmove', (e) => {
-            actualizarLuz(e.touches[0].clientX, e.touches[0].clientY);
-        }, { passive: true });
-        
+        });
     </script>
 </body>
 </html>
